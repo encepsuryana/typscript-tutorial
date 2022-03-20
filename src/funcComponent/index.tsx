@@ -1,4 +1,4 @@
-import Raect, { FC, useState } from "react";
+import Raect, { FC, useEffect, useState } from "react";
 
 type Props = {
   title: string;
@@ -6,6 +6,10 @@ type Props = {
 
 const FuncComp: FC<Props> = (props) => {
   const [count, setCount] = useState<number>(0);
+  const [user, setUser] = useState<{ firstName: string; lastName: string }>({
+    firstName: "",
+    lastName: "",
+  });
 
   //add
   function addCounter(param: number): void {
@@ -17,12 +21,28 @@ const FuncComp: FC<Props> = (props) => {
     setCount(param - 1);
   }
 
+  //function login
+  function _login() {
+    setUser({
+      firstName: "John",
+      lastName: "Doe",
+    });
+  }
+
+  //callback
+  useEffect(() => {
+    console.log("Get Data");
+  }, [JSON.stringify(user)]);
+
   return (
     <div>
       <h1>{props.title}</h1>
-      <button onClick={removeCounter.bind(removeCounter, count)}>Remove</button>
-      <h2>{count}</h2>
-      <button onClick={addCounter.bind(addCounter, count)}>Click me</button>
+      <button onClick={_login}>Login</button>
+      <h2>
+        {count} {user.firstName} {user.lastName}
+      </h2>
+      <button onClick={addCounter.bind(addCounter, count)}>+</button>
+      <button onClick={removeCounter.bind(removeCounter, count)}>-</button>
     </div>
   );
 };
